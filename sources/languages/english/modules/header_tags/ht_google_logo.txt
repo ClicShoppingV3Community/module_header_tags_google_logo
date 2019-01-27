@@ -1,0 +1,3 @@
+
+ module_header_tags_google_logo_meta_title = Do you want insert your logo in google graph ?
+ module_header_tags_google_logo_meta_description = Add  your logo in google graph

@@ -1,0 +1,2 @@
+module_header_tags_google_logo_meta_title = Souhaitez-vous afficher le logo de votre entreprise dans Google Graph ?
+module_header_tags_google_logo_meta_description = Ajoute le logo de votre entreprise dans Google Graph
