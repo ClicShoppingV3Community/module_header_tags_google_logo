@@ -1,19 +1,20 @@
 <?php
-/**
- *
- *  @copyright 2008 - https://www.clicshopping.org
- *  @Brand : ClicShopping(Tm) at Inpi all right Reserved
- *  @Licence GPL 2 & MIT
- *  @licence MIT - Portion of osCommerce 2.4
- *  @Info : https://www.clicshopping.org/forum/trademark/
- *
- */
+  /**
+   *
+   * @copyright 2008 - https://www.clicshopping.org
+   * @Brand : ClicShopping(Tm) at Inpi all right Reserved
+   * @Licence GPL 2 & MIT
+   * @licence MIT - Portion of osCommerce 2.4
+   * @Info : https://www.clicshopping.org/forum/trademark/
+   *
+   */
 
   use ClicShopping\OM\Registry;
   use ClicShopping\OM\HTTP;
   use ClicShopping\OM\CLICSHOPPING;
 
-  class ht_google_logo {
+  class ht_google_logo
+  {
     public $code;
     public $group;
     public $title;
@@ -21,20 +22,22 @@
     public $sort_order;
     public $enabled = false;
 
-    public function __construct() {
+    public function __construct()
+    {
       $this->code = get_class($this);
       $this->group = basename(__DIR__);
 
       $this->title = CLICSHOPPING::getDef('module_header_tags_google_logo_meta_title');
       $this->description = CLICSHOPPING::getDef('module_header_tags_google_logo_meta_description');
 
-      if ( defined('MODULE_HEADER_TAGS_GOOGLE_LOGO_META_STATUS') ) {
+      if (defined('MODULE_HEADER_TAGS_GOOGLE_LOGO_META_STATUS')) {
         $this->sort_order = MODULE_HEADER_TAGS_GOOGLE_LOGO_META_SORT_ORDER;
         $this->enabled = (MODULE_HEADER_TAGS_GOOGLE_LOGO_META_STATUS == 'True');
       }
     }
 
-    public function execute() {
+    public function execute()
+    {
 
       $CLICSHOPPING_Template = Registry::get('Template');
       $CLICSHOPPING_Customer = Registry::get('Customer');
@@ -44,7 +47,7 @@
 
         if (MODULE_HEADER_TAGS_GOOGLE_LOGO_META_BANNER_GROUP != '') {
 
-           $banners_group = MODULE_HEADER_TAGS_GOOGLE_LOGO_META_BANNER_GROUP;
+          $banners_group = MODULE_HEADER_TAGS_GOOGLE_LOGO_META_BANNER_GROUP;
 
           $Qbanner = $CLICSHOPPING_Db->prepare('select banners_image,
                                                  banners_group
@@ -63,7 +66,7 @@
           $footer_tag .= '"@context": "https://schema.org", ';
           $footer_tag .= '"@type": "Organization", ';
           $footer_tag .= '"url": "' . HTTP::typeUrlDomain() . '", ';
-          $footer_tag .= '"logo": "' . HTTP::getShopUrlDomain() . $CLICSHOPPING_Template->getDirectoryTemplateImages().  $banner['banners_image'] . '" ';
+          $footer_tag .= '"logo": "' . HTTP::getShopUrlDomain() . $CLICSHOPPING_Template->getDirectoryTemplateImages() . $banner['banners_image'] . '" ';
           $footer_tag .= '} ';
           $footer_tag .= '</script>' . "\n";
 
@@ -75,15 +78,18 @@
 
     }
 
-    public function isEnabled() {
+    public function isEnabled()
+    {
       return $this->enabled;
     }
 
-    public function check() {
+    public function check()
+    {
       return defined('MODULE_HEADER_TAGS_GOOGLE_LOGO_META_STATUS');
     }
 
-    public function install() {
+    public function install()
+    {
       $CLICSHOPPING_Db = Registry::get('Db');
 
       $CLICSHOPPING_Db->save('configuration', [
@@ -122,19 +128,21 @@
         ]
       );
 
-       return $CLICSHOPPING_Db->save('configuration', ['configuration_value' => '1'],
-                                               ['configuration_key' => 'WEBSITE_MODULE_INSTALLED']
-                            );
+      return $CLICSHOPPING_Db->save('configuration', ['configuration_value' => '1'],
+        ['configuration_key' => 'WEBSITE_MODULE_INSTALLED']
+      );
     }
 
-    public function remove() {
+    public function remove()
+    {
       return Registry::get('Db')->exec('delete from :table_configuration where configuration_key in ("' . implode('", "', $this->keys()) . '")');
     }
 
-    public function keys() {
+    public function keys()
+    {
       return array('MODULE_HEADER_TAGS_GOOGLE_LOGO_META_STATUS',
-                   'MODULE_HEADER_TAGS_GOOGLE_LOGO_META_BANNER_GROUP',
-                   'MODULE_HEADER_TAGS_GOOGLE_LOGO_META_SORT_ORDER'
-                  );
+        'MODULE_HEADER_TAGS_GOOGLE_LOGO_META_BANNER_GROUP',
+        'MODULE_HEADER_TAGS_GOOGLE_LOGO_META_SORT_ORDER'
+      );
     }
   }
